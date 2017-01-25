@@ -260,7 +260,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
     width, height = img.size
     draw = ImageDraw.Draw(img)
     # font = ImageFont.truetype(<font-file>, <font-size>)
-    font = ImageFont.truetype("LemonMilk.otf", 90)
+    font = ImageFont.truetype(dir + "/LemonMilk.otf", 90)
     # draw.text((x, y),"Sample Text",(r,g,b))
     current_h = 50
     pad = 20
@@ -268,7 +268,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         w, h = draw.textsize(item, font=font)
         draw.text(((width - w) / 2, current_h), item, default_text_color, font=font)
         current_h += h + pad
-    font = ImageFont.truetype("LemonMilk.otf", 50)
+    font = ImageFont.truetype(dir + "/LemonMilk.otf", 50)
     i = 0
     for item in testo:
         # il primo elemento e il nome titolo, il secondo il valore, il terzo la variazione
@@ -285,7 +285,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         w, h = font.getsize(item[2])
         draw.text((1040 - w, 350 + (100 * i)), item[2], rgb[i], font=font)
         i += 1
-    font = ImageFont.truetype("LemonMilk.otf", 20)
+    font = ImageFont.truetype(dir + "/LemonMilk.otf", 20)
     draw.text((10, 1040), footer_sx, '#ffffff', font=font)
     draw.text((800, 1040), footer_dx, '#ffffff', font=font)
     img_output = dir + '/instagram_output.jpg'
