@@ -134,7 +134,7 @@ def get_quotes():
             mail_body = "Problema, job non contiene elementi " + job['key']
             send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
             exit()
-        if job['key'] in str(storico_jobs) and not test_mode and job['key'] != '146771/1/9':
+        if job['key'] in str(storico_jobs) and not test_mode:
             continue
         items = hc.get_job(job['key']).items.list()
         job_key = [job['key']]
