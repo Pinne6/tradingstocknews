@@ -392,7 +392,7 @@ def main():
     out_listini, out_metalli, out_currency, lista_da_pubblicare = decide_quotes(lista, args)
     image = create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, args)
     instagram_caption = 'test'
-    # publish_instagram(image, instagram_caption)
+    publish_instagram(image, instagram_caption)
     exit()
 
 if __name__ == "__main__":
