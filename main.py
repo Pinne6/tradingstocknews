@@ -134,7 +134,7 @@ def get_quotes():
             mail_body = "Problema, job non contiene elementi " + job['key']
             send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
             exit()
-        if job['key'] in str(storico_jobs) and not test_mode:
+        if job['key'] in str(storico_jobs) and not test_mode and job['key'] != '146771/1/11':
             continue
         items = hc.get_job(job['key']).items.list()
         job_key = [job['key']]
@@ -392,6 +392,7 @@ def main():
     out_listini, out_metalli, out_currency, lista_da_pubblicare = decide_quotes(lista, args)
     image = create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, args)
     instagram_caption = 'test'
+    print('sono a stampare instagram')
     publish_instagram(image, instagram_caption)
     exit()
 
