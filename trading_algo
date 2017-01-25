@@ -1,0 +1,25 @@
+import numpy as np
+
+num_sims = 10000
+num_part = 1000
+
+i_won = []
+
+for sim in range(0, num_sims):
+    stock_returns = np.random.rand(num_part) * 0.25 + 0.1
+    best_ret = max(stock_returns)
+    my_ret = 1 if np.random.rand() > 0.7 else -1
+    i_won.append(1 if my_ret > best_ret else 0)
+
+win_prop = np.array(i_won).mean()
+std_err = 1.96 * np.sqrt(win_prop * (1 - win_prop) / num_sims)
+
+print('Win probability (Upper)', win_prop + std_err)
+print('Win probability (Lower)', win_prop - std_err)
+
+
+self.SetCash(100000)
+self.SetStartDate(2013,1,1)
+self.SetEndDate(2015,1,1)
+self.AddEquity("SPX500USD", Resolution.Tick)  # Default to minute bars
+self.SetBrokerageModel(BrokerageName.Default, AccountType.Cash)
