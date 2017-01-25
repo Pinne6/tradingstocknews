@@ -35,6 +35,7 @@ def getImageSize(fname):
             raise RuntimeError("Unsupported format")
         return width, height
 
+"""
 img = Image.open("trading_01_c.jpg")
 draw = ImageDraw.Draw(img)
 # font = ImageFont.truetype(<font-file>, <font-size>)
@@ -44,3 +45,4 @@ w, h = draw.textsize(msg)
 # draw.text((x, y),"Sample Text",(r,g,b))
 draw.text((100, 50), msg, '#0000ff', font=font)
 img.save('sample-out.jpg')
+"""
