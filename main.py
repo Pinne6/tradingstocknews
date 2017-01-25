@@ -16,6 +16,7 @@ from PIL import ImageFont
 from PIL import ImageDraw
 import textwrap
 from pytz import timezone
+import time
 
 # server 'local' o 'remoto'
 server = scraping_settings.server
@@ -122,35 +123,23 @@ def get_quotes():
 
     hc = HubstorageClient(auth=API)
     # lista dei job, il primo della lista e' l'ultimo eseguito
-    jobs = hc.get_project('146771').jobq.list()
-    for job in jobs:
-        if job['state'] != 'finished':
-            mail_subject = "Problema, stato job non finito"
-            mail_body = "Problema, stato job non finito " + job['key']
-            send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
-            exit()
-        if 'items' not in job:
-            mail_subject = "Problema, job non contiene elementi"
-            mail_body = "Problema, job non contiene elementi " + job['key']
-            send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
-            exit()
-        if job['key'] in str(storico_jobs) and not test_mode and job['key'] != '146771/1/11':
-            continue
-        items = hc.get_job(job['key']).items.list()
-        job_key = [job['key']]
-        for item in items:
-            lista.append((item['simbolo'], item['prezzo'], item['variazione'], item['time_aggiornamento'],
-                          item['segno'], item['titolo'], item['percentuale']))
-        run_time = job['running_time'] / 1000
-        data = datetime.datetime.fromtimestamp(run_time).strftime("%Y%m%d")
-        mail_subject = "Scraping job eseguito"
-        mail_body = "Scraping job eseguito " + job['key']
-        send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
-        with open(yahoo_finance_storico_jobs_csv, 'a', newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(job_key)
-            f.close()
-        return lista
+    run = hc.push_job(projectid='146771', spidername='YahooFinance')
+    job = hc.get_job(run.key)
+    while job.metadata['state'] != 'finished':
+        time.sleep(10)
+        job = hc.get_job(run.key)
+    items = hc.get_job(run.key).items.list()
+    for item in items:
+        lista.append((item['simbolo'], item['prezzo'], item['variazione'], item['time_aggiornamento'],
+                      item['segno'], item['titolo'], item['percentuale']))
+    mail_subject = "Scraping job eseguito"
+    mail_body = "Scraping job eseguito " + run.key
+    send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
+    with open(yahoo_finance_storico_jobs_csv, 'a', newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(run.key)
+        f.close()
+    return lista
 
 
 def decide_quotes(lista, args):
