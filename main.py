@@ -36,7 +36,7 @@ API = scraping_settings.API
 # directory
 dir = scraping_settings.dir
 yahoo_finance_storico_jobs_csv = scraping_settings.storico_jobs_csv
-# modalità di test
+# modalita di test
 test_mode = False
 lista = []
 storico_jobs = []
@@ -159,7 +159,7 @@ def decide_quotes(lista, args):
     out_currency = []
     lista_da_pubblicare = []
     if datetime.datetime.today().weekday() < 5 or test_mode:
-        # è giorno feriale, lista comprende indici, metalli e currency
+        # e giorno feriale, lista comprende indici, metalli e currency
         if args[0] == 'currency':
             # currency sono aperte sempre, quindi le aggiungo
             for i in lista:
@@ -267,7 +267,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
     font = ImageFont.truetype("LemonMilk.otf", 50)
     i = 0
     for item in testo:
-        # il primo elemento è il nome titolo, il secondo il valore, il terzo la variazione
+        # il primo elemento e il nome titolo, il secondo il valore, il terzo la variazione
         # il nome titolo lo allineo a sinistra
         w, h = font.getsize(item[0])
         draw.text((70, 350 + (100 * i)), item[0], default_text_color, font=font)
