@@ -154,6 +154,7 @@ def get_quotes():
 
 
 def decide_quotes(lista, args):
+    print('dentro decide_quotes')
     out_listini = []
     out_metalli = []
     out_currency = []
@@ -168,6 +169,7 @@ def decide_quotes(lista, args):
             lista_da_pubblicare.append('cu')
         # aggiungo gli indici in base agli orari di apertura
         elif args[0] == 'listini':
+            print('dentro decide_quotes listini')
             if apertura_eu < datetime.datetime.now().time() < chiusura_eu or test_mode:
                 # aggiungo i listini europei
                 for i in lista:
@@ -199,6 +201,7 @@ def decide_quotes(lista, args):
 
 def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, args):
     if args[0] == 'listini' and len(lista_da_pubblicare) == 2:
+        print('dentro create_images 2 listini')
         # ho due listini
         # faccio una immagine con listini
         # decido come formattare l'immagine dei listini
@@ -217,6 +220,7 @@ def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, a
             footer_sx = create_footer()
             img_output = api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args)
     elif args[0] == 'listini' and len(lista_da_pubblicare) == 1:
+        print('dentro create_images 1 listini')
         if 'eu' in lista_da_pubblicare:
             # ho EU per il titolo
             # per ogni item creo la formattazione adeguata
