@@ -65,7 +65,7 @@ average_super_positive = 1
 average_positive = 0.3
 average_negative = -0.3
 average_super_negative = -1
-immagine = 'trading_05_blur.jpg'
+immagine = dir + '/trading_05_blur.jpg'
 footer_sx = ''
 footer_dx = '@TradingStockNews'
 default_text_color = '#ffffff'
@@ -288,7 +288,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
     font = ImageFont.truetype("LemonMilk.otf", 20)
     draw.text((10, 1040), footer_sx, '#ffffff', font=font)
     draw.text((800, 1040), footer_dx, '#ffffff', font=font)
-    img_output = 'instagram_output.jpg'
+    img_output = dir + '/instagram_output.jpg'
     img.save(img_output)
     return img_output
 
