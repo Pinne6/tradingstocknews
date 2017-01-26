@@ -1,3 +1,8 @@
+"""
+2.0 - 26/11/2017
+- implementata mail di errore nel caso args[0] sia vuoto
+"""
+
 from hubstorage import HubstorageClient
 import csv
 import datetime
@@ -120,7 +125,6 @@ def get_quotes():
         mail_body = "Problema, non trovo file con lo storico jobs"
         send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
         exit()
-
     hc = HubstorageClient(auth=API)
     # lista dei job, il primo della lista e' l'ultimo eseguito
     run = hc.push_job(projectid='146771', spidername='YahooFinance')
@@ -185,6 +189,12 @@ def decide_quotes(lista, args):
                     if i[0] in lista_metalli:
                         out_metalli.append(i)
                 lista_da_pubblicare.append('me') """
+        else:
+            mail_subject = "Decide quotes errore"
+            mail_body = "Args[0] non contiene currency o listini"
+            send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject,
+                       mail_body)
+            exit()
         return out_listini, out_metalli, out_currency, lista_da_pubblicare
 
 
@@ -241,6 +251,12 @@ def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, a
             titolo = ['FX update']
             footer_sx = create_footer()
             img_output = api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args)
+    else:
+        mail_subject = "Create images errore"
+        mail_body = "Args[0] non contiene currency o listini o la lista e vuota"
+        send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject,
+                   mail_body)
+        exit()
     return img_output
 
 
@@ -249,7 +265,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
     width, height = img.size
     draw = ImageDraw.Draw(img)
     # font = ImageFont.truetype(<font-file>, <font-size>)
-    font = ImageFont.truetype(dir + "/LemonMilk.otf", 90)
+    font = ImageFont.truetype(dir + "LemonMilk.otf", 90)
     # draw.text((x, y),"Sample Text",(r,g,b))
     current_h = 50
     pad = 20
@@ -257,7 +273,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         w, h = draw.textsize(item, font=font)
         draw.text(((width - w) / 2, current_h), item, default_text_color, font=font)
         current_h += h + pad
-    font = ImageFont.truetype(dir + "/LemonMilk.otf", 50)
+    font = ImageFont.truetype(dir + "LemonMilk.otf", 50)
     i = 0
     for item in testo:
         # il primo elemento e il nome titolo, il secondo il valore, il terzo la variazione
@@ -274,10 +290,10 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         w, h = font.getsize(item[2])
         draw.text((1040 - w, 350 + (100 * i)), item[2], rgb[i], font=font)
         i += 1
-    font = ImageFont.truetype(dir + "/LemonMilk.otf", 20)
+    font = ImageFont.truetype(dir + "LemonMilk.otf", 20)
     draw.text((10, 1040), footer_sx, '#ffffff', font=font)
     draw.text((800, 1040), footer_dx, '#ffffff', font=font)
-    img_output = dir + '/instagram_output.jpg'
+    img_output = dir + 'instagram_output.jpg'
     img.save(img_output)
     return img_output
 
@@ -309,7 +325,6 @@ def create_title(input_list):
 
 
 def format_text(text):
-    linee = len(text)
     text_out = []
     rgb = []
     for i, item in enumerate(text):
