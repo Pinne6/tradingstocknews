@@ -1,5 +1,7 @@
 """
-2.0 - 26/11/2017
+2.0.1 - 26/11/2017
+- corretto errore nel filename dell'immagine di base
+2.0.0 - 26/11/2017
 - implementata mail di errore nel caso args[0] sia vuoto
 """
 
@@ -46,32 +48,41 @@ yahoo_finance_storico_jobs_csv = scraping_settings.storico_jobs_csv
 test_mode = False
 lista = []
 storico_jobs = []
+# orari apertura e chiusura listini EU
 apertura_eu = datetime.time(9, 0, 0)
 chiusura_eu = datetime.time(17, 30, 0)
+# orari apertura e chiusura listini US
 apertura_us = datetime.time(15, 30, 0)
 chiusura_us = datetime.time(22, 0, 0)
+# orari apertura e chiusura listini AS
 apertura_as = datetime.time(1, 0, 0)
 chiusura_as = datetime.time(9, 0, 0)
+# orari apertura e chiusura metalli
 apertura_me = datetime.time(9, 0, 0)
 chiusura_me = datetime.time(19, 30, 0)
+# orari apertura e chiusura currency
 apertura_cu = datetime.time(0, 0, 0)
 chiusura_cu = datetime.time(23, 59, 59)
+# elenco dei ticker
 lista_indici_eu = ['^FTSE', '^GDAXI', '^FCHI', 'FTSEMIB.MI']  # UK, DE, FR, IT
 lista_indici_us = ['^GSPC', '^DJI', '^IXIC']
 lista_indici_as = ['^N225', '^HSI', '000001.SS']
 lista_metalli = ['GC=F', 'SI=F', 'CL=F', 'BZ=F']  # gold, silver, crude oil, oil
 lista_currency = ['EURUSD=X', 'GBPUSD=X', 'EURCHF=X', 'JPY=X', 'EURGBP=X']
+# lista frasi da utilizzare
 titles__super_positive_eu = ['climbs to the top', 'loves green', 'doesn\'t stop']
 titles_positive_eu = ['is green', 'is climbing', 'is pointing north']
 titles_neutral_eu = ['goes nowhere', 'doesn\'t move', 'feels OK-ish']
 titles_negative_eu = ['is red', 'isn\t happy', 'is pointing south']
 titles_super_negative_eu = ['goes bananas', 'in free fall', 'down to hell']
 titles_default_eu = ['major indices update']
+# valori percentuali per determinare la classe di titolo da utilizzare
 average_super_positive = 1
 average_positive = 0.3
 average_negative = -0.3
 average_super_negative = -1
-immagine = dir + '/trading_05_blur.jpg'
+# filename dell'immagine base da utilizzare
+immagine = dir + 'trading_05_blur.jpg'
 footer_sx = ''
 footer_dx = '@TradingStockNews'
 default_text_color = '#ffffff'
