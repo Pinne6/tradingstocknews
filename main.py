@@ -1,4 +1,6 @@
 """
+2.0.3 - 27/11/2017
+- incluso ASIA nelle scelte dei listini da stampare sull'immagine
 2.0.2 - 27/11/2017
 - debug su img_output
 2.0.1 - 26/11/2017
@@ -251,6 +253,16 @@ def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, a
             listini_us = [item for item in out_listini if item[0] in lista_indici_us]
             titolo = create_title(listini_us)
             titolo = ['US ' + titolo]
+            footer_sx = create_footer()
+            img_output = api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args)
+        elif 'as' in lista_da_pubblicare:
+            # ho ASIA per il titolo
+            # per ogni item creo la formattazione adeguata
+            testo, rgb = format_text(out_listini)
+            # creo il titolo per eu
+            listini_as = [item for item in out_listini if item[0] in lista_indici_as]
+            titolo = create_title(listini_as)
+            titolo = ['ASIA ' + titolo]
             footer_sx = create_footer()
             img_output = api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args)
     elif args[0] == 'currency':
