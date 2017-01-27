@@ -1,4 +1,6 @@
 """
+2.0.2 - 27/11/2017
+- debug su img_output
 2.0.1 - 26/11/2017
 - corretto errore nel filename dell'immagine di base
 2.0.0 - 26/11/2017
@@ -158,7 +160,7 @@ def get_quotes():
 
 
 def decide_quotes(lista, args):
-    print('dentro decide_quotes')
+    print('dentro decide_quotes\n')
     out_listini = []
     out_metalli = []
     out_currency = []
@@ -173,7 +175,7 @@ def decide_quotes(lista, args):
             lista_da_pubblicare.append('cu')
         # aggiungo gli indici in base agli orari di apertura
         elif args[0] == 'listini':
-            print('dentro decide_quotes listini')
+            print('dentro decide_quotes listini\n')
             if apertura_eu < datetime.datetime.now().time() < chiusura_eu or test_mode:
                 # aggiungo i listini europei
                 for i in lista:
@@ -211,7 +213,7 @@ def decide_quotes(lista, args):
 
 def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, args):
     if args[0] == 'listini' and len(lista_da_pubblicare) == 2:
-        print('dentro create_images 2 listini')
+        print('dentro create_images 2 listini\n')
         # ho due listini
         # faccio una immagine con listini
         # decido come formattare l'immagine dei listini
@@ -230,7 +232,7 @@ def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, a
             footer_sx = create_footer()
             img_output = api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args)
     elif args[0] == 'listini' and len(lista_da_pubblicare) == 1:
-        print('dentro create_images 1 listini')
+        print('dentro create_images 1 listini\n')
         if 'eu' in lista_da_pubblicare:
             # ho EU per il titolo
             # per ogni item creo la formattazione adeguata
@@ -272,6 +274,7 @@ def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, a
 
 
 def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
+    print('dentro api_creazione_immagine\n')
     img = Image.open(immagine)
     width, height = img.size
     draw = ImageDraw.Draw(img)
@@ -306,6 +309,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
     draw.text((800, 1040), footer_dx, '#ffffff', font=font)
     img_output = dir + 'instagram_output.jpg'
     img.save(img_output)
+    print('api_creazione_immagine: creata immagine ' + img_output + '\n')
     return img_output
 
 
