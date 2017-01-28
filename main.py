@@ -1,4 +1,6 @@
 """
+2.1.0 - 28/11/2017
+- cambiata API per scrapinghub, uso quella nuova
 2.0.3 - 27/11/2017
 - incluso ASIA nelle scelte dei listini da stampare sull'immagine
 2.0.2 - 27/11/2017
@@ -9,7 +11,7 @@
 - implementata mail di errore nel caso args[0] sia vuoto
 """
 
-from hubstorage import HubstorageClient
+from scrapinghub import Connection
 import csv
 import datetime
 import smtplib
@@ -140,23 +142,24 @@ def get_quotes():
         mail_body = "Problema, non trovo file con lo storico jobs"
         send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
         exit()
-    hc = HubstorageClient(auth=API)
+    conn = Connection(API)
+    project = conn[146771]
     # lista dei job, il primo della lista e' l'ultimo eseguito
-    run = hc.push_job(projectid='146771', spidername='YahooFinance')
-    job = hc.get_job(run.key)
-    while job.metadata['state'] != 'finished':
+    job_num = project.schedule('YahooFinance')
+    job = project.job(job_num)
+    while job.info['state'] != 'finished':
         time.sleep(10)
-        job = hc.get_job(run.key)
-    items = hc.get_job(run.key).items.list()
-    for item in items:
+        job = project.job(job_num)
+    time.sleep(3)
+    for item in job.items():
         lista.append((item['simbolo'], item['prezzo'], item['variazione'], item['time_aggiornamento'],
                       item['segno'], item['titolo'], item['percentuale']))
     mail_subject = "Scraping job eseguito"
-    mail_body = "Scraping job eseguito " + run.key
+    mail_body = "Scraping job eseguito " + job_num
     send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject, mail_body)
     with open(yahoo_finance_storico_jobs_csv, 'a', newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(run.key)
+        writer.writerow(job_num)
         f.close()
     return lista
 
