@@ -1,3 +1,4 @@
 *.pyc
 scraping_settings.py
 storico_jobs.csv
+instagram_output.jpg
