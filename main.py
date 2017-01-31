@@ -1,4 +1,6 @@
 """
+2.1.2 - 31/11/2017
+- username e password instagram nei settings
 2.1.1 - 31/11/2017
 - aggiunta pausa dopo lo scheduling del job per evitare errore
 - aumentato char del footer
@@ -54,6 +56,10 @@ API = scraping_settings.API
 # directory
 dir = scraping_settings.dir
 yahoo_finance_storico_jobs_csv = scraping_settings.storico_jobs_csv
+# instagram username
+instagram_username = scraping_settings.instagram_username
+# instagram password
+instagram_password = scraping_settings.instagram_password
 # modalita di test
 test_mode = False
 lista = []
@@ -313,7 +319,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         # il primo elemento e il nome titolo, il secondo il valore, il terzo la variazione
         # il nome titolo lo allineo a sinistra
         w, h = font.getsize(item[0])
-        draw.text((60, 350 + (100 * i)), item[0], default_text_color, font=font)
+        draw.text((50, 350 + (100 * i)), item[0], default_text_color, font=font)
         # il valore lo allineo a destra
         w, h = font.getsize(item[1])
         if args[0] == 'listini':
@@ -326,7 +332,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         i += 1
     font = ImageFont.truetype(dir + "LemonMilk.otf", 25)
     draw.text((10, 1040), footer_sx, '#ffffff', font=font)
-    draw.text((800, 1040), footer_dx, '#ffffff', font=font)
+    draw.text((750, 1040), footer_dx, '#ffffff', font=font)
     img_output = dir + 'instagram_output.jpg'
     img.save(img_output)
     print('api_creazione_immagine: creata immagine ' + img_output + '\n')
@@ -394,7 +400,7 @@ def format_text(text):
 
 
 def publish_instagram(image, instagram_caption):
-    instagram_api = InstagramAPI("tradingstocknews", "sto23espo")
+    instagram_api = InstagramAPI(instagram_username, instagram_password)
     instagram_api.login()  # login
     instagram_api.uploadPhoto(image, instagram_caption)
     instagram_api.logout()
