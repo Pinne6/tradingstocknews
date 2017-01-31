@@ -1,4 +1,8 @@
 """
+2.1.1 - 31/11/2017
+- aggiunta pausa dopo lo scheduling del job per evitare errore
+- aumentato char del footer
+- spostato a sx nome del titolo
 2.1.0 - 28/11/2017
 - cambiata API per scrapinghub, uso quella nuova
 2.0.3 - 27/11/2017
@@ -79,7 +83,7 @@ lista_currency = ['EURUSD=X', 'GBPUSD=X', 'EURCHF=X', 'JPY=X', 'EURGBP=X']
 titles__super_positive_eu = ['climbs to the top', 'loves green', 'doesn\'t stop']
 titles_positive_eu = ['is green', 'is climbing', 'is pointing north']
 titles_neutral_eu = ['goes nowhere', 'doesn\'t move', 'feels OK-ish']
-titles_negative_eu = ['is red', 'isn\t happy', 'is pointing south']
+titles_negative_eu = ['is red', 'isn\'t happy', 'is pointing south']
 titles_super_negative_eu = ['goes bananas', 'in free fall', 'down to hell']
 titles_default_eu = ['major indices update']
 # valori percentuali per determinare la classe di titolo da utilizzare
@@ -146,6 +150,7 @@ def get_quotes():
     project = conn[146771]
     # lista dei job, il primo della lista e' l'ultimo eseguito
     job_num = project.schedule('YahooFinance')
+    time.sleep(10)
     job = project.job(job_num)
     while job.info['state'] != 'finished':
         time.sleep(10)
@@ -276,7 +281,7 @@ def create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, a
             # creo il titolo per currency
             # listini_currency = [item for item in out_currency if item[0] in lista_currency]
             # titolo = create_title(listini_currency)
-            titolo = ['FX update']
+            titolo = ['FOREX update']
             footer_sx = create_footer()
             img_output = api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args)
     else:
@@ -308,7 +313,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         # il primo elemento e il nome titolo, il secondo il valore, il terzo la variazione
         # il nome titolo lo allineo a sinistra
         w, h = font.getsize(item[0])
-        draw.text((70, 350 + (100 * i)), item[0], default_text_color, font=font)
+        draw.text((60, 350 + (100 * i)), item[0], default_text_color, font=font)
         # il valore lo allineo a destra
         w, h = font.getsize(item[1])
         if args[0] == 'listini':
@@ -319,7 +324,7 @@ def api_creazione_immagine(testo, rgb, titolo, footer_sx, footer_dx, args):
         w, h = font.getsize(item[2])
         draw.text((1040 - w, 350 + (100 * i)), item[2], rgb[i], font=font)
         i += 1
-    font = ImageFont.truetype(dir + "LemonMilk.otf", 20)
+    font = ImageFont.truetype(dir + "LemonMilk.otf", 25)
     draw.text((10, 1040), footer_sx, '#ffffff', font=font)
     draw.text((800, 1040), footer_dx, '#ffffff', font=font)
     img_output = dir + 'instagram_output.jpg'
