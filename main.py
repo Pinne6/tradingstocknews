@@ -1,4 +1,6 @@
 """
+2.2.1 - 31/01/2017
+- accorciato tag di produzione
 2.2.0 - 31/01/2017
 - abilitati tag di produzione, lancio ufficiale
 2.1.2 - 31/01/2017
@@ -107,8 +109,10 @@ default_text_color = '#ffffff'
 instagram_caption = 'Double tap if you like our updates! Comment below: are you winning today? ' \
                     '#stockmarket #stocktrader #trading #technicalanalysis #stocks #swingtrader #euro #dollar #forex ' \
                     '#forextrading #daytrader #daytrading #trader #binaryoptions #currencytrading #eurusd #usd ' \
-                    '#gbpusd #pennystocks #fx #fxtrader #tradingsignals #capital #fxtrading #makemoney #TagsForLikes ' \
-                    '#bank #instarich #instagood #money #cash'
+                    '#gbpusd #pennystocks #fx #fxtrader #tradingsignals #capital #fxtrading #makemoney #TagsForLikes '
+
+
+# '#bank #instarich #instagood #money #cash'
 # instagram_caption = 'test'
 
 
@@ -443,8 +447,10 @@ def main():
     out_listini, out_metalli, out_currency, lista_da_pubblicare = decide_quotes(lista, args)
     image = create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, args)
     print('sono a stampare instagram')
+    print(instagram_caption)
     publish_instagram(image, instagram_caption)
     exit()
+
 
 if __name__ == "__main__":
     main()
