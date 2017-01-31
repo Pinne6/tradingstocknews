@@ -1,19 +1,21 @@
 """
-2.1.2 - 31/11/2017
+2.2.0 - 31/01/2017
+- abilitati tag di produzione, lancio ufficiale
+2.1.2 - 31/01/2017
 - username e password instagram nei settings
-2.1.1 - 31/11/2017
+2.1.1 - 31/01/2017
 - aggiunta pausa dopo lo scheduling del job per evitare errore
 - aumentato char del footer
 - spostato a sx nome del titolo
-2.1.0 - 28/11/2017
+2.1.0 - 28/01/2017
 - cambiata API per scrapinghub, uso quella nuova
-2.0.3 - 27/11/2017
+2.0.3 - 27/01/2017
 - incluso ASIA nelle scelte dei listini da stampare sull'immagine
-2.0.2 - 27/11/2017
+2.0.2 - 27/01/2017
 - debug su img_output
-2.0.1 - 26/11/2017
+2.0.1 - 26/01/2017
 - corretto errore nel filename dell'immagine di base
-2.0.0 - 26/11/2017
+2.0.0 - 26/01/2017
 - implementata mail di errore nel caso args[0] sia vuoto
 """
 
@@ -107,7 +109,7 @@ instagram_caption = 'Double tap if you like our updates! Comment below: are you 
                     '#forextrading #daytrader #daytrading #trader #binaryoptions #currencytrading #eurusd #usd ' \
                     '#gbpusd #pennystocks #fx #fxtrader #tradingsignals #capital #fxtrading #makemoney #TagsForLikes ' \
                     '#bank #instarich #instagood #money #cash'
-instagram_caption = 'test'
+# instagram_caption = 'test'
 
 
 def send_email(mail_from, mail_to, mail_username, mail_password, mail_server, mail_port, mail_subject,
@@ -440,7 +442,6 @@ def main():
     # decido quali quote far vedere in base all'ora del giorno
     out_listini, out_metalli, out_currency, lista_da_pubblicare = decide_quotes(lista, args)
     image = create_images(out_listini, out_metalli, out_currency, lista_da_pubblicare, args)
-    instagram_caption = 'test'
     print('sono a stampare instagram')
     publish_instagram(image, instagram_caption)
     exit()
