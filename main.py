@@ -1,4 +1,6 @@
 """
+2.2.2 - 02/02/2017
+- allungata chiusura US a 23:00
 2.2.1 - 31/01/2017
 - accorciato tag di produzione
 2.2.0 - 31/01/2017
@@ -73,7 +75,7 @@ apertura_eu = datetime.time(9, 0, 0)
 chiusura_eu = datetime.time(17, 30, 0)
 # orari apertura e chiusura listini US
 apertura_us = datetime.time(15, 30, 0)
-chiusura_us = datetime.time(22, 0, 0)
+chiusura_us = datetime.time(23, 0, 0)
 # orari apertura e chiusura listini AS
 apertura_as = datetime.time(1, 0, 0)
 chiusura_as = datetime.time(9, 0, 0)
