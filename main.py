@@ -1,4 +1,6 @@
 """
+2.3.0 - 20/02/2017
+- aggiunto calendario giorni borsa EU e US
 2.2.2 - 02/02/2017
 - allungata chiusura US a 23:00
 2.2.1 - 31/01/2017
@@ -42,6 +44,7 @@ from PIL import ImageDraw
 import textwrap
 from pytz import timezone
 import time
+import stock_calendar
 
 # server 'local' o 'remoto'
 server = scraping_settings.server
@@ -67,7 +70,7 @@ instagram_username = scraping_settings.instagram_username
 # instagram password
 instagram_password = scraping_settings.instagram_password
 # modalita di test
-test_mode = False
+test_mode = True
 lista = []
 storico_jobs = []
 # orari apertura e chiusura listini EU
@@ -86,8 +89,22 @@ chiusura_me = datetime.time(19, 30, 0)
 apertura_cu = datetime.time(0, 0, 0)
 chiusura_cu = datetime.time(23, 59, 59)
 # elenco dei ticker
-lista_indici_eu = ['^FTSE', '^GDAXI', '^FCHI', 'FTSEMIB.MI']  # UK, DE, FR, IT
-lista_indici_us = ['^GSPC', '^DJI', '^IXIC']
+lista_indici_eu = []
+lista_indici_us = []
+if datetime.date.today() in stock_calendar.stock_calendar_uk:
+    lista_indici_eu.append('^FTSE')
+if datetime.date.today() in stock_calendar.stock_calendar_de:
+    lista_indici_eu.append('^GDAXI')
+if datetime.date.today() in stock_calendar.stock_calendar_fr:
+    lista_indici_eu.append('^FCHI')
+if datetime.date.today() in stock_calendar.stock_calendar_it:
+    lista_indici_eu.append('^FTSEMIB.MI')
+# lista_indici_eu = ['^FTSE', '^GDAXI', '^FCHI', 'FTSEMIB.MI']  # UK, DE, FR, IT
+if datetime.date.today() in stock_calendar.stock_calendar_us:
+    lista_indici_us.append('^GSPC')
+    lista_indici_us.append('^DJI')
+    lista_indici_us.append('^IXIC')
+# lista_indici_us = ['^GSPC', '^DJI', '^IXIC']
 lista_indici_as = ['^N225', '^HSI', '000001.SS']
 lista_metalli = ['GC=F', 'SI=F', 'CL=F', 'BZ=F']  # gold, silver, crude oil, oil
 lista_currency = ['EURUSD=X', 'GBPUSD=X', 'EURCHF=X', 'JPY=X', 'EURGBP=X']
