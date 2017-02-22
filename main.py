@@ -1,4 +1,6 @@
 """
+2.3.2 - 22/02/2017
+- aggiunte pause 2s tra le chiamate instagram
 2.3.1 - 22/02/2017
 - aggiornata password email
 2.3.0 - 20/02/2017
@@ -428,9 +430,13 @@ def format_text(text):
 
 def publish_instagram(image, instagram_caption):
     instagram_api = InstagramAPI(instagram_username, instagram_password)
+    time.sleep(2)
     instagram_api.login()  # login
+    time.sleep(2)
     instagram_api.uploadPhoto(image, instagram_caption)
+    time.sleep(2)
     instagram_api.logout()
+    time.sleep(2)
     return
 
 
