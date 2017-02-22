@@ -1,4 +1,6 @@
 """
+2.3.3 - 22/02/2017
+- tolti parametri fissi dal metodo send email
 2.3.2 - 22/02/2017
 - aggiunte pause 2s tra le chiamate instagram
 2.3.1 - 22/02/2017
@@ -155,16 +157,16 @@ def send_email(mail_from, mail_to, mail_username, mail_password, mail_server, ma
 
     try:
         msg = MIMEMultipart()
-        msg['From'] = 'servizio.tappeto@gmail.com'
+        msg['From'] = mail_username
         msg['To'] = mail_to
         msg['Subject'] = mail_subject
         body = mail_body
         msg.attach(MIMEText(body, 'plain'))
         server = smtplib.SMTP(mail_server, mail_port)
         server.starttls()
-        server.login('servizio.tappeto@gmail.com', 'amicifxt30')
+        server.login(mail_username, mail_password)
         text2 = msg.as_string()
-        server.sendmail('servizio.tappeto@gmail.com', mail_to, text2)
+        server.sendmail(mail_username, mail_to, text2)
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S ') + 'Email inviata con successo')
         server.quit()
     except smtplib.SMTPException:
