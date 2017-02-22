@@ -1,4 +1,6 @@
 """
+2.3.1 - 22/02/2017
+- aggiornata password email
 2.3.0 - 20/02/2017
 - aggiunto calendario giorni borsa EU e US
 2.2.2 - 02/02/2017
@@ -70,7 +72,7 @@ instagram_username = scraping_settings.instagram_username
 # instagram password
 instagram_password = scraping_settings.instagram_password
 # modalita di test
-test_mode = True
+test_mode = False
 lista = []
 storico_jobs = []
 # orari apertura e chiusura listini EU
@@ -158,7 +160,7 @@ def send_email(mail_from, mail_to, mail_username, mail_password, mail_server, ma
         msg.attach(MIMEText(body, 'plain'))
         server = smtplib.SMTP(mail_server, mail_port)
         server.starttls()
-        server.login('servizio.tappeto@gmail.com', 'amicifxt')
+        server.login('servizio.tappeto@gmail.com', 'amicifxt30')
         text2 = msg.as_string()
         server.sendmail('servizio.tappeto@gmail.com', mail_to, text2)
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S ') + 'Email inviata con successo')
